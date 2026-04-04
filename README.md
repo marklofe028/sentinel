@@ -24,23 +24,24 @@ While building Assay, GitHub blocked our own push because the test file containe
 
 ## What it catches
 
-| Rule | Tier | Example |
-|------|------|---------|
-| Hardcoded secrets | BLOCK | `sk_live_` keys, GitHub PATs, AWS access keys in source |
-| `.env` not in `.gitignore` | BLOCK | Credentials committed to version control |
-| Known CVEs | WARN | `lodash@4.17.20`, `jsonwebtoken<9.0.0` |
-| DEBUG flag in source | WARN | `DEBUG=true` hardcoded outside `.env` |
-| CORS wildcard | WARN | `origin: "*"` in production server config |
-| No rate limiting on auth | WARN | `/auth` routes without brute-force protection |
-| Unpinned dependencies | ADVISORY | `^` and `~` ranges in `package.json` |
-| Missing `.env.example` | ADVISORY | No reference for required environment variables |
-| No security headers | ADVISORY | Server initialized without `helmet` |
+| Rule                       | Tier     | Example                                                 |
+| -------------------------- | -------- | ------------------------------------------------------- |
+| Hardcoded secrets          | BLOCK    | `sk_live_` keys, GitHub PATs, AWS access keys in source |
+| `.env` not in `.gitignore` | BLOCK    | Credentials committed to version control                |
+| Known CVEs                 | WARN     | `lodash@4.17.20`, `jsonwebtoken<9.0.0`                  |
+| DEBUG flag in source       | WARN     | `DEBUG=true` hardcoded outside `.env`                   |
+| CORS wildcard              | WARN     | `origin: "*"` in production server config               |
+| No rate limiting on auth   | WARN     | `/auth` routes without brute-force protection           |
+| Unpinned dependencies      | ADVISORY | `^` and `~` ranges in `package.json`                    |
+| Missing `.env.example`     | ADVISORY | No reference for required environment variables         |
+| No security headers        | ADVISORY | Server initialized without `helmet`                     |
 
 ---
 
 ## Scoring
 
 Every issue reduces the score from 100:
+
 ```
 Critical (Tier 3 — BLOCK)    -25 points each
 Warning  (Tier 2 — WARN)     -10 points each
@@ -54,6 +55,7 @@ Default deployment threshold: **70/100**. Below that, Assay blocks and tells you
 ## Getting started
 
 ### CLI
+
 ```bash
 npm install -g @assay-dev/cli
 
@@ -72,6 +74,7 @@ Visit the live dashboard to run an audit in the browser:
 ---
 
 ## Output
+
 ```
 ASSAY AUDIT REPORT
 ────────────────────────────────────────
@@ -101,6 +104,7 @@ Status:   [ASSAY:BLOCK] Below threshold — review issues first
 ## Architecture
 
 Assay is a TypeScript monorepo built with pnpm workspaces and Turborepo.
+
 ```
 assay/
 ├── packages/
@@ -145,9 +149,4 @@ The voice layer — currently in development — brings this to life. Think Jarv
 ## Built by
 
 Mark Lofe Bagamano — Senior Software Engineer  
-[GitHub](https://github.com/marklofe028) · [LinkedIn](https://linkedin.com/in/your-handle)
-
----
-
-*"You are not here to be liked. You are here to be right."*  
-— Assay system prompt
+[GitHub](https://github.com/marklofe028) · [LinkedIn](https://linkedin.com/in/mlbagamano)
