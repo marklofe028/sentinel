@@ -1,12 +1,12 @@
 import type { Rule, Issue, ScanContext } from '../types/index.js'
 
 const KNOWN_VULNERABLE: Record<string, { below: string; cve: string; severity: 'warning' | 'critical' }> = {
-  'lodash':          { below: '4.17.21', cve: 'CVE-2021-23337', severity: 'critical' },
-  'axios':           { below: '1.6.0',   cve: 'CVE-2023-45857', severity: 'warning' },
-  'express':         { below: '4.19.0',  cve: 'CVE-2024-29041', severity: 'warning' },
-  'jsonwebtoken':    { below: '9.0.0',   cve: 'CVE-2022-23529', severity: 'critical' },
-  'node-fetch':      { below: '3.0.0',   cve: 'CVE-2022-0235',  severity: 'warning' },
-  'minimist':        { below: '1.2.6',   cve: 'CVE-2021-44906', severity: 'warning' },
+  'lodash': { below: '4.17.21', cve: 'CVE-2021-23337', severity: 'critical' },
+  'axios': { below: '1.6.0', cve: 'CVE-2023-45857', severity: 'warning' },
+  'express': { below: '4.19.0', cve: 'CVE-2024-29041', severity: 'warning' },
+  'jsonwebtoken': { below: '9.0.0', cve: 'CVE-2022-23529', severity: 'critical' },
+  'node-fetch': { below: '3.0.0', cve: 'CVE-2022-0235', severity: 'warning' },
+  'minimist': { below: '1.2.6', cve: 'CVE-2021-44906', severity: 'warning' },
 }
 
 function parseVersion(v: string): number[] {
@@ -40,13 +40,14 @@ export const dependenciesRule: Rule = {
     for (const [name, version] of Object.entries(deps)) {
       // unpinned version check
       if (version.startsWith('^') || version.startsWith('~') || version === '*') {
+        const pinnedVersion = version.replaceAll('^', '').replaceAll('~', '').replaceAll('*', '')
         issues.push({
           id: `dependencies:unpinned:${name}`,
           severity: 'advisory',
           tier: 1,
           title: `Unpinned dependency: ${name}`,
           detail: `${name}@${version} uses a range — a future patch could introduce a breaking change or vulnerability.`,
-          fix: `Pin to an exact version: "${name}": "${version.replace(/[\^~*]/, '')}"`,
+          fix: `Pin to an exact version: "${name}": "${pinnedVersion}"`,
         })
       }
 
