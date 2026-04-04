@@ -1,0 +1,70 @@
+import { readdir, readFile } from 'fs/promises'
+import { join, relative } from 'path'
+
+const IGNORE = new Set([
+  'node_modules', '.git', 'dist', '.turbo',
+  '.next', 'build', 'coverage', '.cache'
+])
+
+const ALLOWED_EXTENSIONS = new Set([
+  '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs',
+  '.json', '.env', '.example', '.yaml', '.yml',
+  '.toml', '.md', '.html', '.css'
+])
+
+const IGNORE_PATTERNS = [
+  /\.test\.(ts|js)x?$/,
+  /\.spec\.(ts|js)x?$/,
+  /__tests__/,
+]
+
+async function walk(
+  dir: string,
+  root: string,
+  files: Record<string, string> = {}
+): Promise<Record<string, string>> {
+  const entries = await readdir(dir, { withFileTypes: true })
+
+  for (const entry of entries) {
+    if (IGNORE.has(entry.name)) continue
+    const fullPath = join(dir, entry.name)
+    const relPath  = relative(root, fullPath)
+
+    if (entry.isDirectory()) {
+      await walk(fullPath, root, files)
+    } else {
+      const ext = '.' + entry.name.split('.').pop()
+      if (!ALLOWED_EXTENSIONS.has(ext)) continue
+      if (IGNORE_PATTERNS.some(p => p.test(relPath))) continue
+      try {
+        files[relPath] = await readFile(fullPath, 'utf-8')
+      } catch {
+        // skip unreadable files
+      }
+    }
+  }
+
+  return files
+}
+
+export async function readProjectFiles(dir: string): Promise<Record<string, string>> {
+  return walk(dir, dir)
+}
+
+export async function readGitignore(dir: string): Promise<string[]> {
+  try {
+    const content = await readFile(join(dir, '.gitignore'), 'utf-8')
+    return content.split('\n').filter(l => l.trim() && !l.startsWith('#'))
+  } catch {
+    return []
+  }
+}
+
+export async function readPackageJson(dir: string): Promise<Record<string, unknown> | undefined> {
+  try {
+    const content = await readFile(join(dir, 'package.json'), 'utf-8')
+    return JSON.parse(content)
+  } catch {
+    return undefined
+  }
+}
