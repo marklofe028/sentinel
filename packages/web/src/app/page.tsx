@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div style={{ maxWidth: '720px', margin: '0 auto', padding: '80px 2rem' }}>
 
-      {/* HERO */}
+      {/* 1. HERO */}
       <div style={{ marginBottom: '48px' }}>
         <p style={{
           fontFamily: 'var(--mono)',
@@ -68,20 +68,133 @@ export default function Home() {
         }}>
           Run audit free
         </Link>
-        <a href="https://github.com/marklofe028/assay" target="_blank" rel="noopener noreferrer" style={{
-          display: 'inline-block',
-          padding: '12px 24px',
-          border: '1px solid var(--border-accent)',
-          color: 'var(--text-secondary)',
-          borderRadius: '6px',
-          textDecoration: 'none',
-          fontSize: '14px',
-        }}>
+        <a
+          href="https://github.com/marklofe028/assay"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-block',
+            padding: '12px 24px',
+            border: '1px solid var(--border-accent)',
+            color: 'var(--text-secondary)',
+            borderRadius: '6px',
+            textDecoration: 'none',
+            fontSize: '14px',
+          }}
+        >
           View on GitHub
         </a>
       </div>
 
-      {/* DIFFERENTIATION */}
+      {/* 2. CLI OUTPUT — proof before anything else */}
+      <div style={{ marginBottom: '64px' }}>
+        <p style={{
+          fontFamily: 'var(--mono)',
+          fontSize: '11px',
+          color: 'var(--text-muted)',
+          letterSpacing: '0.08em',
+          marginBottom: '12px',
+          textTransform: 'uppercase',
+        }}>
+          See it in action
+        </p>
+        <div style={{
+          background: '#0d0d0d',
+          border: '1px solid #222',
+          borderRadius: '8px',
+          padding: '20px 24px',
+          fontFamily: 'var(--mono)',
+          fontSize: '13px',
+          lineHeight: 1.8,
+        }}>
+          <p style={{ color: '#666', marginBottom: '8px' }}>$ assay audit ./my-startup</p>
+
+          <p style={{ color: '#e8e8e8', fontWeight: 700, marginBottom: '4px' }}>
+            ASSAY AUDIT REPORT
+          </p>
+          <p style={{ color: '#333', marginBottom: '12px' }}>
+            ────────────────────────────────
+          </p>
+
+          <p style={{ color: '#e8e8e8', marginBottom: '2px' }}>
+            Score:{'   '}
+            <span style={{ color: '#ef4444', fontWeight: 700 }}>42 / 100</span>
+          </p>
+          <p style={{ color: '#e8e8e8', marginBottom: '2px' }}>Files:{'   '}38</p>
+          <p style={{ color: '#e8e8e8', marginBottom: '2px' }}>Issues:{'  '}7</p>
+          <p style={{ color: '#e8e8e8', marginBottom: '12px' }}>
+            Status:{'  '}
+            <span style={{ color: '#ef4444' }}>
+              [ASSAY:BLOCK] Below threshold — review issues first
+            </span>
+          </p>
+
+          <p style={{ color: '#333', marginBottom: '12px' }}>
+            ────────────────────────────────
+          </p>
+
+          <p style={{ color: '#ef4444', fontWeight: 700, marginBottom: '6px' }}>
+            [BLOCK] Hard blocks (1)
+          </p>
+          <p style={{ color: '#ef4444', marginBottom: '2px' }}>
+            &nbsp;&nbsp;✕ Stripe live key detected in source file
+          </p>
+          <p style={{ color: '#555', marginBottom: '2px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;src/config.ts — &quot;sk_live_ab...&quot; found in plain text
+          </p>
+          <p style={{ color: '#4ade80', marginBottom: '12px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;Fix: Move to .env and add .env to .gitignore. Rotate the key immediately.
+          </p>
+
+          <p style={{ color: '#eab308', fontWeight: 700, marginBottom: '6px' }}>
+            [WARN] Friction gates (3)
+          </p>
+          <p style={{ color: '#eab308', marginBottom: '2px' }}>
+            &nbsp;&nbsp;⚠ lodash@4.17.20 has a known CVE
+          </p>
+          <p style={{ color: '#555', marginBottom: '2px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;CVE-2021-23337 — prototype pollution, affects versions below 4.17.21
+          </p>
+          <p style={{ color: '#4ade80', marginBottom: '8px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;Fix: pnpm add lodash@latest
+          </p>
+
+          <p style={{ color: '#eab308', marginBottom: '2px' }}>
+            &nbsp;&nbsp;⚠ CORS wildcard origin detected
+          </p>
+          <p style={{ color: '#555', marginBottom: '2px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;src/server.ts allows requests from any origin (*)
+          </p>
+          <p style={{ color: '#4ade80', marginBottom: '8px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;Fix: Restrict to your domain via process.env.ALLOWED_ORIGIN
+          </p>
+
+          <p style={{ color: '#eab308', marginBottom: '2px' }}>
+            &nbsp;&nbsp;⚠ Auth route has no rate limiting
+          </p>
+          <p style={{ color: '#555', marginBottom: '2px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;src/routes/auth.ts — /auth exposed to brute force
+          </p>
+          <p style={{ color: '#4ade80', marginBottom: '12px' }}>
+            &nbsp;&nbsp;&nbsp;&nbsp;Fix: Add express-rate-limit to /auth endpoints
+          </p>
+
+          <p style={{ color: '#888', fontWeight: 700, marginBottom: '6px' }}>
+            [ADVISORY] Advisories (3)
+          </p>
+          <p style={{ color: '#888', marginBottom: '2px' }}>
+            &nbsp;&nbsp;· Unpinned dependency: axios (^1.5.0)
+          </p>
+          <p style={{ color: '#888', marginBottom: '2px' }}>
+            &nbsp;&nbsp;· No .env.example file found
+          </p>
+          <p style={{ color: '#888', marginBottom: '2px' }}>
+            &nbsp;&nbsp;· Security headers not set (missing helmet)
+          </p>
+        </div>
+      </div>
+
+      {/* 3. POSITIONING */}
       <div style={{
         borderLeft: '2px solid var(--border-accent)',
         paddingLeft: '16px',
@@ -95,7 +208,11 @@ export default function Home() {
         }}>
           Most tools tell you what&apos;s wrong.
           Assay tells you{' '}
-          <span style={{ color: 'var(--text-primary)', fontStyle: 'normal', fontWeight: 500 }}>
+          <span style={{
+            color: 'var(--text-primary)',
+            fontStyle: 'normal',
+            fontWeight: 500,
+          }}>
             what to do about it
           </span>{' '}
           — in plain language, before you deploy, with the specificity of a senior engineer
@@ -103,7 +220,7 @@ export default function Home() {
         </p>
       </div>
 
-      {/* REAL INCIDENTS */}
+      {/* 4. REAL INCIDENTS */}
       <div style={{ marginBottom: '64px' }}>
         <p style={{
           fontFamily: 'var(--mono)',
@@ -130,24 +247,24 @@ export default function Home() {
               app: 'Moltbook',
               what: '1.5M API tokens exposed',
               how: 'Founder shipped without a single security review. "I didn\'t write a single line of code for Moltbook."',
-              catchLine: 'Assay catches: hardcoded tokens in source, missing .env hygiene',
+              block: 'Assay would have blocked this — hardcoded tokens detected before commit.',
               color: '#ef4444',
             },
             {
               app: 'Tea App',
               what: '72,000 images leaked including 13,000 government IDs',
               how: 'Firebase left with default settings. No authorization policies applied before launch.',
-              catchLine: 'Assay catches: exposed API keys, missing security headers, no rate limiting on auth',
+              block: 'Assay would have flagged this — exposed API keys and missing security headers caught on first scan.',
               color: '#ef4444',
             },
             {
               app: '5,600 vibe-coded apps scanned',
               what: '2,000+ vulnerabilities — 400 exposed API keys',
               how: 'Most had never been audited before deployment. The code worked. The security didn\'t.',
-              catchLine: 'Assay catches: secrets in source, unpinned deps with known CVEs, CORS wildcards',
+              block: 'Assay catches exactly this — secrets in source, unpinned CVE-affected deps, CORS wildcards.',
               color: '#eab308',
             },
-          ].map(({ app, what, how, catchLine, color }) => (
+          ].map(({ app, what, how, block, color }) => (
             <div key={app} style={{
               background: 'var(--bg-card)',
               padding: '20px 24px',
@@ -176,7 +293,7 @@ export default function Home() {
                 fontSize: '13px',
                 color: 'var(--text-secondary)',
                 lineHeight: 1.6,
-                marginBottom: '8px',
+                marginBottom: '10px',
               }}>
                 {how}
               </p>
@@ -184,8 +301,9 @@ export default function Home() {
                 fontSize: '12px',
                 color: '#22c55e',
                 fontFamily: 'var(--mono)',
+                lineHeight: 1.5,
               }}>
-                ✓ {catchLine}
+                ✓ {block}
               </p>
             </div>
           ))}
@@ -208,76 +326,12 @@ export default function Home() {
             Assay exists to prevent these exact scenarios.
           </p>
           <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-            Here&apos;s what a typical audit looks like.
+            One command. Before every deploy.
           </p>
         </div>
       </div>
 
-      {/* LIVE CLI OUTPUT */}
-      <div style={{ marginBottom: '64px' }}>
-        <p style={{
-          fontFamily: 'var(--mono)',
-          fontSize: '11px',
-          color: 'var(--text-muted)',
-          letterSpacing: '0.08em',
-          marginBottom: '12px',
-          textTransform: 'uppercase',
-        }}>
-          What it looks like
-        </p>
-        <div style={{
-          background: '#0d0d0d',
-          border: '1px solid #222',
-          borderRadius: '8px',
-          padding: '20px 24px',
-          fontFamily: 'var(--mono)',
-          fontSize: '13px',
-          lineHeight: 1.8,
-        }}>
-          <p style={{ color: '#666', marginBottom: '8px' }}>$ assay audit ./my-startup</p>
-
-          <p style={{ color: '#e8e8e8', fontWeight: 700, marginBottom: '4px' }}>ASSAY AUDIT REPORT</p>
-          <p style={{ color: '#444', marginBottom: '12px' }}>────────────────────────────────</p>
-
-          <p style={{ color: '#e8e8e8', marginBottom: '2px' }}>
-            Score:{'   '}
-            <span style={{ color: '#ef4444', fontWeight: 700 }}>42 / 100</span>
-          </p>
-          <p style={{ color: '#e8e8e8', marginBottom: '2px' }}>Files:{'   '}38</p>
-          <p style={{ color: '#e8e8e8', marginBottom: '2px' }}>Issues:{'  '}7</p>
-          <p style={{ color: '#e8e8e8', marginBottom: '12px' }}>
-            Status:{'  '}
-            <span style={{ color: '#ef4444' }}>[ASSAY:BLOCK] Below threshold — review issues first</span>
-          </p>
-
-          <p style={{ color: '#444', marginBottom: '12px' }}>────────────────────────────────</p>
-
-          <p style={{ color: '#ef4444', fontWeight: 700, marginBottom: '6px' }}>[BLOCK] Hard blocks (1)</p>
-          <p style={{ color: '#ef4444', marginBottom: '2px' }}>&nbsp;&nbsp;✕ Stripe live key detected in source file</p>
-          <p style={{ color: '#666', marginBottom: '2px' }}>&nbsp;&nbsp;&nbsp;&nbsp;src/config.ts — &quot;sk_live_ab...&quot; found in source</p>
-          <p style={{ color: '#4ade80', marginBottom: '12px' }}>&nbsp;&nbsp;&nbsp;&nbsp;Fix: Move to .env and add .env to .gitignore. Rotate the key immediately.</p>
-
-          <p style={{ color: '#eab308', fontWeight: 700, marginBottom: '6px' }}>[WARN] Friction gates (3)</p>
-          <p style={{ color: '#eab308', marginBottom: '2px' }}>&nbsp;&nbsp;⚠ lodash@4.17.20 has a known CVE</p>
-          <p style={{ color: '#666', marginBottom: '2px' }}>&nbsp;&nbsp;&nbsp;&nbsp;CVE-2021-23337 — prototype pollution, affects versions below 4.17.21</p>
-          <p style={{ color: '#4ade80', marginBottom: '8px' }}>&nbsp;&nbsp;&nbsp;&nbsp;Fix: pnpm add lodash@latest</p>
-
-          <p style={{ color: '#eab308', marginBottom: '2px' }}>&nbsp;&nbsp;⚠ CORS wildcard origin detected</p>
-          <p style={{ color: '#666', marginBottom: '2px' }}>&nbsp;&nbsp;&nbsp;&nbsp;src/server.ts allows requests from any origin (*)</p>
-          <p style={{ color: '#4ade80', marginBottom: '8px' }}>&nbsp;&nbsp;&nbsp;&nbsp;Fix: Restrict to your domain via process.env.ALLOWED_ORIGIN</p>
-
-          <p style={{ color: '#eab308', marginBottom: '2px' }}>&nbsp;&nbsp;⚠ Auth route has no rate limiting</p>
-          <p style={{ color: '#666', marginBottom: '2px' }}>&nbsp;&nbsp;&nbsp;&nbsp;src/routes/auth.ts — /auth exposed to brute force</p>
-          <p style={{ color: '#4ade80', marginBottom: '12px' }}>&nbsp;&nbsp;&nbsp;&nbsp;Fix: Add express-rate-limit to /auth endpoints</p>
-
-          <p style={{ color: '#888', fontWeight: 700, marginBottom: '6px' }}>[ADVISORY] Advisories (3)</p>
-          <p style={{ color: '#888', marginBottom: '2px' }}>&nbsp;&nbsp;· Unpinned dependency: axios (^1.5.0)</p>
-          <p style={{ color: '#888', marginBottom: '2px' }}>&nbsp;&nbsp;· No .env.example file found</p>
-          <p style={{ color: '#888', marginBottom: '2px' }}>&nbsp;&nbsp;· Security headers not set (missing helmet)</p>
-        </div>
-      </div>
-
-      {/* WHAT IT CATCHES */}
+      {/* 5. WHAT IT CATCHES */}
       <div style={{ marginBottom: '64px' }}>
         <p style={{
           fontFamily: 'var(--mono)',
@@ -329,7 +383,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* NOT vs IS */}
+      {/* 6. NOT vs IS */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
@@ -358,7 +412,7 @@ export default function Home() {
             <p key={item} style={{
               fontSize: '13px',
               color: 'var(--text-secondary)',
-              marginBottom: '6px',
+              marginBottom: '8px',
               lineHeight: 1.5,
             }}>
               ✕ {item}
@@ -384,7 +438,7 @@ export default function Home() {
             <p key={item} style={{
               fontSize: '13px',
               color: 'var(--text-secondary)',
-              marginBottom: '6px',
+              marginBottom: '8px',
               lineHeight: 1.5,
             }}>
               ✓ {item}
@@ -393,7 +447,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* INSTALL */}
+      {/* 7. INSTALL */}
       <div style={{
         background: 'var(--bg-card)',
         border: '1px solid var(--border)',
@@ -412,23 +466,23 @@ export default function Home() {
           Get started in 30 seconds
         </p>
         {[
-          'npm install -g @assay-dev/cli',
-          'cd your-project',
-          'assay audit .',
-        ].map((cmd, i) => (
+          { cmd: 'npm install -g @assay-dev/cli', dim: true },
+          { cmd: 'cd your-project', dim: true },
+          { cmd: 'assay audit .', dim: false },
+        ].map(({ cmd, dim }) => (
           <p key={cmd} style={{
             fontFamily: 'var(--mono)',
             fontSize: '14px',
-            color: i === 2 ? 'var(--text-primary)' : 'var(--text-secondary)',
+            color: dim ? 'var(--text-secondary)' : 'var(--text-primary)',
             lineHeight: 2,
-            fontWeight: i === 2 ? 500 : 400,
+            fontWeight: dim ? 400 : 500,
           }}>
             <span style={{ color: 'var(--text-muted)' }}>$ </span>{cmd}
           </p>
         ))}
       </div>
 
-      {/* BOTTOM CTA */}
+      {/* 8. BOTTOM CTA */}
       <div style={{ textAlign: 'center' }}>
         <Link href="/audit" style={{
           display: 'inline-block',
