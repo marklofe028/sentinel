@@ -10,7 +10,7 @@ const KNOWN_VULNERABLE: Record<string, { below: string; cve: string; severity: '
 }
 
 function parseVersion(v: string): number[] {
-  return v.replace(/[\^~>=<]/, '').split('.').map(Number)
+  return v.replaceAll('^', '').replaceAll('~', '').replaceAll('>', '').replaceAll('=', '').replaceAll('<', '').split('.').map(Number)
 }
 
 function isBelow(installed: string, threshold: string): boolean {
@@ -54,7 +54,7 @@ export const dependenciesRule: Rule = {
       // known CVE check
       if (name in KNOWN_VULNERABLE) {
         const record = KNOWN_VULNERABLE[name]
-        const cleanVersion = version.replace(/[\^~>=<]/, '')
+        const cleanVersion = version.replaceAll('^', '').replaceAll('~', '').replaceAll('>', '').replaceAll('=', '').replaceAll('<', '')
         if (isBelow(cleanVersion, record.below)) {
           issues.push({
             id: `dependencies:cve:${name}`,
