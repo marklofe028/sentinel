@@ -18,7 +18,7 @@ export function StatusBanner({ score, threshold = 70 }: Props) {
         fontWeight: 700,
         color: ok ? '#22c55e' : '#ef4444',
       }}>
-        {ok ? '[SENTINEL:OK]' : '[SENTINEL:BLOCK]'}
+        {ok ? '[ASSAY:OK]' : '[ASSAY:BLOCK]'}
       </span>
       <span style={{ fontSize: '13px', color: ok ? '#86efac' : '#fca5a5' }}>
         {ok ? 'Clear to deploy' : `Below threshold — review issues before deploying`}

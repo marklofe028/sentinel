@@ -6,8 +6,8 @@ import { initCommand }  from './commands/init.js'
 const program = new Command()
 
 program
-  .name('sentinel')
-  .description('Sentinel — the senior engineer watching every line you ship')
+  .name('assay')
+  .description('Assay — the senior engineer watching every line you ship')
   .version('0.1.0')
 
 program.addCommand(auditCommand)

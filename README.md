@@ -1,8 +1,8 @@
-# Sentinel
+# Assay
 
 **The senior engineer watching every line you ship.**
 
-Sentinel is a security auditor built for the AI-assisted development era. It catches what vibe coding misses — hardcoded secrets, vulnerable dependencies, missing environment hygiene, and deployment anti-patterns — before they hit production.
+Assay is a security auditor built for the AI-assisted development era. It catches what vibe coding misses — hardcoded secrets, vulnerable dependencies, missing environment hygiene, and deployment anti-patterns — before they hit production.
 
 ---
 
@@ -12,13 +12,13 @@ AI coding tools have made it possible for anyone to ship a working application o
 
 Working is not the same as secure. A vibe-coded app can pass every manual test and still have a hardcoded Stripe key, a CORS wildcard, a known CVE in a dependency, and no rate limiting on the auth route — all at the same time.
 
-Sentinel exists to be the senior dev in the room when there isn't one.
+Assay exists to be the senior dev in the room when there isn't one.
 
 ---
 
 ## Demo
 
-While building Sentinel, GitHub blocked our own push because the test file contained a fake Stripe key pattern used to verify the detection rule. Sentinel caught it. Then GitHub caught it. That's the point.
+While building Assay, GitHub blocked our own push because the test file contained a fake Stripe key pattern used to verify the detection rule. Assay caught it. Then GitHub caught it. That's the point.
 
 ---
 
@@ -47,7 +47,7 @@ Warning  (Tier 2 — WARN)     -10 points each
 Advisory (Tier 1 — ADVISORY)  -3 points each
 ```
 
-Default deployment threshold: **70/100**. Below that, Sentinel blocks and tells you exactly what to fix.
+Default deployment threshold: **70/100**. Below that, Assay blocks and tells you exactly what to fix.
 
 ---
 
@@ -58,27 +58,27 @@ Default deployment threshold: **70/100**. Below that, Sentinel blocks and tells 
 npm install -g @assay-dev/cli
 
 # audit any project
-sentinel audit .
+assay audit .
 
 # audit a specific path
-sentinel audit ~/projects/my-app
+assay audit ~/projects/my-app
 ```
 
 ### Web dashboard
 
 Visit the live dashboard to run an audit in the browser:
-**[sentinel.vercel.app](https://sentinel.vercel.app)** ← update with your real URL
+**[assay.vercel.app](https://assay.vercel.app)** ← update with your real URL
 
 ---
 
 ## Output
 ```
-SENTINEL AUDIT REPORT
+ASSAY AUDIT REPORT
 ────────────────────────────────────────
 Score:    58 / 100
 Files:    42
 Issues:   6
-Status:   [SENTINEL:BLOCK] Below threshold — review issues first
+Status:   [ASSAY:BLOCK] Below threshold — review issues first
 ────────────────────────────────────────
 
 [BLOCK] Hard blocks (1)
@@ -100,15 +100,15 @@ Status:   [SENTINEL:BLOCK] Below threshold — review issues first
 
 ## Architecture
 
-Sentinel is a TypeScript monorepo built with pnpm workspaces and Turborepo.
+Assay is a TypeScript monorepo built with pnpm workspaces and Turborepo.
 ```
-sentinel/
+assay/
 ├── packages/
 │   ├── core/      # audit engine — rules, scoring, types
-│   ├── cli/       # sentinel audit . command
+│   ├── cli/       # assay audit . command
 │   ├── web/       # Next.js dashboard
 │   ├── vscode/    # VS Code extension (coming soon)
-│   └── voice/     # "Hey Sentinel" voice layer (coming soon)
+│   └── voice/     # "Hey Assay" voice layer (coming soon)
 ```
 
 The core engine is shared across all surfaces. A rule written once runs in the CLI, the web dashboard, the VS Code extension, and the voice layer.
@@ -118,11 +118,11 @@ The core engine is shared across all surfaces. A rule written once runs in the C
 ## Roadmap
 
 - [x] Core audit engine
-- [x] CLI — `sentinel audit .`
+- [x] CLI — `assay audit .`
 - [x] Web dashboard
-- [ ] `sentinel init <domain>` — bootstrap templates (SaaS, API, mobile)
+- [ ] `assay init <domain>` — bootstrap templates (SaaS, API, mobile)
 - [ ] VS Code extension — inline hints as you type
-- [ ] Voice layer — "Hey Sentinel" Jarvis-style co-pilot
+- [ ] Voice layer — "Hey Assay" Jarvis-style co-pilot
 - [ ] GitHub URL scanner — audit any public repo
 - [ ] CI/CD integration — GitHub Actions, GitLab CI
 
@@ -130,13 +130,13 @@ The core engine is shared across all surfaces. A rule written once runs in the C
 
 ## The vision
 
-Sentinel is two things with one name.
+Assay is two things with one name.
 
-A **sentinel** watches for danger and raises the alarm before damage is done.
+A **assay** watches for danger and raises the alarm before damage is done.
 
 Something **sentient** understands context, reasons about risk, and responds with judgment — not just rules.
 
-Most security tools are pure sentinel: pattern match, flag, exit. Sentinel aims to be both: the rule-based audit layer AND the intelligent co-pilot that explains why something is dangerous, offers the fix in the same breath, and remembers what you've already acknowledged.
+Most security tools are pure assay: pattern match, flag, exit. Assay aims to be both: the rule-based audit layer AND the intelligent co-pilot that explains why something is dangerous, offers the fix in the same breath, and remembers what you've already acknowledged.
 
 The voice layer — currently in development — brings this to life. Think Jarvis from Iron Man: ambient awareness, proactive alerts, and a persona that pushes back when you're about to do something you'll regret.
 
@@ -150,4 +150,4 @@ Mark Lofe Bagamano — Senior Software Engineer
 ---
 
 *"You are not here to be liked. You are here to be right."*  
-— Sentinel system prompt
+— Assay system prompt

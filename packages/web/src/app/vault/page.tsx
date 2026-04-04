@@ -45,7 +45,7 @@ export default function VaultPage() {
               border: '1px solid var(--border)',
               borderRadius: '4px',
             }}>
-              sentinel init {domain}
+              assay init {domain}
             </div>
           </div>
         ))}
@@ -62,7 +62,7 @@ export default function VaultPage() {
         color: 'var(--text-secondary)',
       }}>
         {'Templates coming in v0.2.0 — run '}
-        <span style={{ color: 'var(--text-primary)' }}>sentinel init saas</span>
+        <span style={{ color: 'var(--text-primary)' }}>assay init saas</span>
         {' from the CLI to scaffold today.'}
       </div>
     </div>

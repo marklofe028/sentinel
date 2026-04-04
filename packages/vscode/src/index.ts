@@ -1,3 +1,3 @@
-// Sentinel VS Code extension
+// Assay VS Code extension
 // Coming soon
 export {}

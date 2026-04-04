@@ -5,7 +5,7 @@ import { runAudit } from '@assay-dev/core'
 import { readProjectFiles, readGitignore, readPackageJson } from '../utils/fs.js'
 
 export const auditCommand = new Command('audit')
-  .description('Run Sentinel audit on a project directory')
+  .description('Run Assay audit on a project directory')
   .argument('[path]', 'path to project', '.')
   .option('-t, --threshold <number>', 'minimum passing score', '70')
   .action(async (targetPath: string, opts: { threshold: string }) => {
