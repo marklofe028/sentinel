@@ -100,6 +100,91 @@ export default function Home() {
         </p>
       </div>
 
+      {/* REAL INCIDENTS */}
+      <div style={{ marginBottom: '64px' }}>
+        <p style={{
+          fontFamily: 'var(--mono)',
+          fontSize: '11px',
+          color: 'var(--text-muted)',
+          letterSpacing: '0.08em',
+          marginBottom: '16px',
+          textTransform: 'uppercase',
+        }}>
+          What happens without it
+        </p>
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1px',
+          background: 'var(--border)',
+          borderRadius: '8px',
+          overflow: 'hidden',
+        }}>
+          {[
+            {
+              app: 'Moltbook',
+              what: '1.5M API tokens exposed',
+              how: 'Founder shipped without a single security review. "I didn\'t write a single line of code for Moltbook."',
+              color: '#ef4444',
+            },
+            {
+              app: 'Tea App',
+              what: '72,000 images leaked including 13,000 government IDs',
+              how: 'Firebase left with default settings — no authorization policies applied. Nobody checked before launch.',
+              color: '#ef4444',
+            },
+            {
+              app: '5,600 vibe-coded apps (Escape.tech study)',
+              what: '2,000+ vulnerabilities found — 400 exposed API keys',
+              how: 'Automated scan of publicly deployed AI-generated apps. Most had never been audited.',
+              color: '#eab308',
+            },
+          ].map(({ app, what, how, color }) => (
+            <div key={app} style={{
+              background: 'var(--bg-card)',
+              padding: '20px 24px',
+              borderLeft: `3px solid ${color}`,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '6px' }}>
+                <span style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  color: 'var(--text-primary)',
+                }}>
+                  {app}
+                </span>
+                <span style={{
+                  fontSize: '13px',
+                  color,
+                  fontWeight: 500,
+                }}>
+                  {what}
+                </span>
+              </div>
+              <p style={{
+                fontSize: '13px',
+                color: 'var(--text-secondary)',
+                lineHeight: 1.6,
+              }}>
+                {how}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p style={{
+          fontSize: '13px',
+          color: 'var(--text-muted)',
+          marginTop: '12px',
+          fontStyle: 'italic',
+        }}>
+          These weren't sophisticated attacks. They were preventable oversights
+          that a pre-deployment audit would have caught.
+        </p>
+      </div>
+
       {/* LIVE CLI OUTPUT */}
       <div style={{ marginBottom: '64px' }}>
         <p style={{
@@ -184,11 +269,11 @@ export default function Home() {
         }}>
           {[
             { label: 'Secrets detection', tier: 'BLOCK', desc: 'API keys, tokens, credentials in source' },
-            { label: 'CVE scanning',      tier: 'WARN',  desc: 'Live npm audit — real-time vulnerabilities' },
-            { label: 'Env hygiene',       tier: 'WARN',  desc: 'DEBUG flags, .env not in .gitignore' },
-            { label: 'CORS policy',       tier: 'WARN',  desc: 'Wildcard origins dangerous in production' },
-            { label: 'Rate limiting',     tier: 'WARN',  desc: 'Auth routes without brute-force protection' },
-            { label: 'Security headers',  tier: 'ADVISORY', desc: 'Helmet, XSS, CSRF, clickjacking' },
+            { label: 'CVE scanning', tier: 'WARN', desc: 'Live npm audit — real-time vulnerabilities' },
+            { label: 'Env hygiene', tier: 'WARN', desc: 'DEBUG flags, .env not in .gitignore' },
+            { label: 'CORS policy', tier: 'WARN', desc: 'Wildcard origins dangerous in production' },
+            { label: 'Rate limiting', tier: 'WARN', desc: 'Auth routes without brute-force protection' },
+            { label: 'Security headers', tier: 'ADVISORY', desc: 'Helmet, XSS, CSRF, clickjacking' },
           ].map(({ label, tier, desc }) => {
             const color = tier === 'BLOCK' ? '#ef4444' : tier === 'WARN' ? '#eab308' : '#666'
             return (
