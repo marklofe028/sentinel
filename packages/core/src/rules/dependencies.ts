@@ -10,7 +10,10 @@ const KNOWN_VULNERABLE: Record<string, { below: string; cve: string; severity: '
 }
 
 function parseVersion(v: string): number[] {
-  return v.replaceAll('^', '').replaceAll('~', '').replaceAll('>', '').replaceAll('=', '').replaceAll('<', '').split('.').map(Number)
+  return v
+    .replaceAll('^', '').replaceAll('~', '')
+    .replaceAll('>', '').replaceAll('=', '')
+    .replaceAll('<', '').split('.').map(Number)
 }
 
 function isBelow(installed: string, threshold: string): boolean {
@@ -40,21 +43,22 @@ export const dependenciesRule: Rule = {
     for (const [name, version] of Object.entries(deps)) {
       // unpinned version check
       if (version.startsWith('^') || version.startsWith('~') || version === '*') {
-        const pinnedVersion = version.replaceAll('^', '').replaceAll('~', '').replaceAll('*', '')
         issues.push({
           id: `dependencies:unpinned:${name}`,
           severity: 'advisory',
           tier: 1,
           title: `Unpinned dependency: ${name}`,
           detail: `${name}@${version} uses a range — a future patch could introduce a breaking change or vulnerability.`,
-          fix: `Pin to an exact version: "${name}": "${pinnedVersion}"`,
+          fix: `Pin to an exact version: "${name}": "${version.replaceAll('^', '').replaceAll('~', '').replaceAll('*', '')}"`,
         })
       }
 
-      // known CVE check
+      // static CVE fallback
       if (name in KNOWN_VULNERABLE) {
         const record = KNOWN_VULNERABLE[name]
-        const cleanVersion = version.replaceAll('^', '').replaceAll('~', '').replaceAll('>', '').replaceAll('=', '').replaceAll('<', '')
+        const cleanVersion = version
+          .replaceAll('^', '').replaceAll('~', '')
+          .replaceAll('>', '').replaceAll('=', '').replaceAll('<', '')
         if (isBelow(cleanVersion, record.below)) {
           issues.push({
             id: `dependencies:cve:${name}`,
@@ -62,25 +66,25 @@ export const dependenciesRule: Rule = {
             tier: 2,
             title: `${name}@${cleanVersion} has a known CVE`,
             detail: `${record.cve} — affects versions below ${record.below}. Currently installed: ${cleanVersion}.`,
-            fix: `Upgrade to ${name}@${record.below} or higher: pnpm add ${name}@latest`,
+            fix: `Upgrade: pnpm add ${name}@latest`,
           })
         }
       }
-    }
 
-    // node_modules committed check
-    const hasCommittedModules = Object.keys(ctx.files).some(f =>
-      f.startsWith('node_modules/') || f.includes('/node_modules/')
-    )
-    if (hasCommittedModules) {
-      issues.push({
-        id: 'dependencies:node-modules-committed',
-        severity: 'critical',
-        tier: 3,
-        title: 'node_modules committed to version control',
-        detail: 'node_modules should never be in git — it bloats the repo and overrides lockfile reproducibility.',
-        fix: 'Add node_modules/ to .gitignore and run: git rm -r --cached node_modules',
-      })
+      // node_modules committed check
+      const hasCommittedModules = Object.keys(ctx.files).some(f =>
+        f.startsWith('node_modules/') || f.includes('/node_modules/')
+      )
+      if (hasCommittedModules) {
+        issues.push({
+          id: 'dependencies:node-modules-committed',
+          severity: 'critical',
+          tier: 3,
+          title: 'node_modules committed to version control',
+          detail: 'node_modules should never be in git.',
+          fix: 'Add node_modules/ to .gitignore and run: git rm -r --cached node_modules',
+        })
+      }
     }
 
     return issues

@@ -121,14 +121,17 @@ The core engine is shared across all surfaces. A rule written once runs in the C
 
 ## Roadmap
 
-- [x] Core audit engine
+- [x] Core audit engine — rules, scoring, tiered pushback
 - [x] CLI — `assay audit .`
-- [x] Web dashboard
-- [ ] `assay init <domain>` — bootstrap templates (SaaS, API, mobile)
-- [ ] VS Code extension — inline hints as you type
-- [ ] Voice layer — "Hey Assay" Jarvis-style co-pilot
-- [ ] GitHub URL scanner — audit any public repo
+- [x] Web dashboard — live audit runs in the browser
+- [x] Live CVE detection via npm audit API — real-time vulnerability database
+- [x] CodeQL and Dependabot clean — zero known vulnerabilities in own codebase
+- [ ] `assay init <domain>` — domain-aware bootstrap templates (SaaS, API, mobile)
+- [ ] VS Code extension — inline hints without leaving the editor
+- [ ] Voice layer — "Hey Assay" ambient co-pilot with proactive alerts
+- [ ] GitHub URL scanner — audit any public repo by URL
 - [ ] CI/CD integration — GitHub Actions, GitLab CI
+- [ ] pnpm overrides detection — flag transitive CVEs requiring lockfile overrides
 
 ---
 

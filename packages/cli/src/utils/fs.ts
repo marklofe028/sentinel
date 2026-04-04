@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'fs/promises'
 import { join, relative } from 'path'
 
-const IGNORE = new Set([
+const IGNORE_DIRS = new Set([
   'node_modules', '.git', 'dist', '.turbo',
   '.next', 'build', 'coverage', '.cache'
 ])
@@ -9,13 +9,15 @@ const IGNORE = new Set([
 const ALLOWED_EXTENSIONS = new Set([
   '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs',
   '.json', '.env', '.example', '.yaml', '.yml',
-  '.toml', '.md', '.html', '.css'
+  '.toml', '.html', '.css'
 ])
 
 const IGNORE_PATTERNS = [
   /\.test\.(ts|js)x?$/,
   /\.spec\.(ts|js)x?$/,
   /__tests__/,
+  /\/rules\//,          // skip rule source files — they contain patterns by design
+  /\/dist\//,
 ]
 
 async function walk(
@@ -26,7 +28,7 @@ async function walk(
   const entries = await readdir(dir, { withFileTypes: true })
 
   for (const entry of entries) {
-    if (IGNORE.has(entry.name)) continue
+    if (IGNORE_DIRS.has(entry.name)) continue
     const fullPath = join(dir, entry.name)
     const relPath  = relative(root, fullPath)
 

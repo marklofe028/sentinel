@@ -1,8 +1,9 @@
 import type { AuditResult, ScanContext, Environment, Rule } from '../types/index.js'
-import { secretsRule }     from '../rules/secrets.js'
+import { secretsRule } from '../rules/secrets.js'
 import { environmentRule } from '../rules/environment.js'
 import { dependenciesRule } from '../rules/dependencies.js'
-import { deploymentRule }  from '../rules/deployment.js'
+import { deploymentRule } from '../rules/deployment.js'
+import { runNpmAudit } from '../rules/npm-audit.js'
 
 const ALL_RULES: Rule[] = [
   secretsRule,
@@ -15,13 +16,19 @@ export async function runAudit(
   ctx: ScanContext,
   env: Environment = 'development'
 ): Promise<AuditResult> {
-  const allIssues = ALL_RULES.flatMap(rule => rule.check(ctx))
+  const staticIssues = ALL_RULES.flatMap(rule => rule.check(ctx))
+  const npmIssues = await runNpmAudit(ctx)
+  const allIssues = [...staticIssues, ...npmIssues]
+
   const criticalCount = allIssues.filter(i => i.severity === 'critical').length
-  const warningCount  = allIssues.filter(i => i.severity === 'warning').length
+  const warningCount = allIssues.filter(i => i.severity === 'warning').length
   const advisoryCount = allIssues.filter(i => i.severity === 'advisory').length
-  const score = Math.max(0,
+
+  const score = Math.max(
+    0,
     100 - (criticalCount * 25) - (warningCount * 10) - (advisoryCount * 3)
   )
+
   return {
     score,
     issues: allIssues,
