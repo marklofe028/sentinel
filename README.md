@@ -69,7 +69,7 @@ assay audit ~/projects/my-app
 ### Web dashboard
 
 Visit the live dashboard to run an audit in the browser:
-**[assay.vercel.app](https://assay.vercel.app)** ← update with your real URL
+**[assay-six.vercel.app](https://assay-six.vercel.app)**
 
 ---
 
