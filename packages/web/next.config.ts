@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@sentinel-dev/core'],
+  transpilePackages: ['@assay-dev/core'],
 }
 
 export default nextConfig

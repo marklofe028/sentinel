@@ -55,7 +55,7 @@ Default deployment threshold: **70/100**. Below that, Sentinel blocks and tells 
 
 ### CLI
 ```bash
-npm install -g @sentinel-dev/cli
+npm install -g @assay-dev/cli
 
 # audit any project
 sentinel audit .

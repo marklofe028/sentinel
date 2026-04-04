@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Sentinel — Ship secure code',
+  title: 'Assay — Ship secure code',
   description: 'The senior engineer watching every line you ship.',
 }
 
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontSize: '16px',
               letterSpacing: '-0.02em',
             }}>
-              SENTINEL
+              ASSAY
             </span>
             <span style={{
               fontSize: '11px',

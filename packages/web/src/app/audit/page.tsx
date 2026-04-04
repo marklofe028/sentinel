@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ScoreGauge } from '../../components/ScoreGauge'
 import { IssueCard } from '../../components/IssueCard'
 import { StatusBanner } from '../../components/StatusBanner'
-import type { AuditResult, Issue } from '@sentinel-dev/core'
+import type { AuditResult, Issue } from '@assay-dev/core'
 
 const DEMO_FILES = {
   'src/config.ts': `const apiKey = "sk_live_" + "demo1234567890abcdef"\nconst debug = true\nDEBUG=true`,
@@ -52,7 +52,7 @@ export default function AuditPage() {
           Audit
         </h1>
         <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
-          Run Sentinel against a codebase. In production, connect via CLI or API.
+          Run Assay against a codebase. In production, connect via CLI or API.
         </p>
       </div>
 
@@ -114,7 +114,7 @@ export default function AuditPage() {
           fontFamily: 'var(--mono)',
         }}
       >
-        {loading ? 'Scanning...' : '▶ Run sentinel audit'}
+        {loading ? 'Scanning...' : '▶ Run assay audit'}
       </button>
 
       {error && (

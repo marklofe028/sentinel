@@ -15,7 +15,7 @@ export default function Home() {
           letterSpacing: '0.1em',
           marginBottom: '16px',
         }}>
-          SENTINEL / v0.1.0
+          ASSAY / v0.1.0
         </p>
         <h1 style={{
           fontSize: '42px',
@@ -35,7 +35,7 @@ export default function Home() {
           lineHeight: 1.7,
           maxWidth: '520px',
         }}>
-          Sentinel audits AI-generated and vibe-coded projects before they hit
+          Assay audits AI-generated and vibe-coded projects before they hit
           production. Security, environment hygiene, dependency CVEs, and
           deployment readiness — in seconds.
         </p>
@@ -125,8 +125,8 @@ export default function Home() {
           # install and run
         </p>
         {[
-          'npm install -g @sentinel-dev/cli',
-          'sentinel audit .',
+          'npm install -g @assay-dev/cli',
+          'assay audit .',
         ].map(cmd => (
           <p key={cmd} style={{
             fontFamily: 'var(--mono)',

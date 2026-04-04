@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { runAudit } from '@sentinel-dev/core'
+import { runAudit } from '@assay-dev/core'
 
 export async function POST(req: NextRequest) {
   try {

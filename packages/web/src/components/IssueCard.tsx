@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import type { Issue } from '@sentinel-dev/core'
+import type { Issue } from '@assay-dev/core'
 
 interface Props { issue: Issue }
 

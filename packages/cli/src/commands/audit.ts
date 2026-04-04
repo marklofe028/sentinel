@@ -1,7 +1,7 @@
 import { Command } from 'commander'
 import chalk from 'chalk'
 import ora from 'ora'
-import { runAudit } from '@sentinel-dev/core'
+import { runAudit } from '@assay-dev/core'
 import { readProjectFiles, readGitignore, readPackageJson } from '../utils/fs.js'
 
 export const auditCommand = new Command('audit')
@@ -10,7 +10,7 @@ export const auditCommand = new Command('audit')
   .option('-t, --threshold <number>', 'minimum passing score', '70')
   .action(async (targetPath: string, opts: { threshold: string }) => {
     const threshold = parseInt(opts.threshold, 10)
-    const spinner = ora('Sentinel scanning...').start()
+    const spinner = ora('Assay scanning...').start()
 
     try {
       const [files, gitignore, packageJson] = await Promise.all([
@@ -27,7 +27,7 @@ export const auditCommand = new Command('audit')
       spinner.stop()
 
       // header
-      console.log('\n' + chalk.bold('SENTINEL AUDIT REPORT'))
+      console.log('\n' + chalk.bold('ASSAY AUDIT REPORT'))
       console.log(chalk.dim('─'.repeat(40)))
 
       // score
@@ -39,8 +39,8 @@ export const auditCommand = new Command('audit')
       console.log(`Files:    ${fileCount}`)
       console.log(`Issues:   ${result.issues.length}`)
       console.log(`Status:   ${result.score >= threshold
-        ? chalk.green('[SENTINEL:OK] Clear to deploy')
-        : chalk.red('[SENTINEL:BLOCK] Below threshold — review issues first')}`)
+        ? chalk.green('[ASSAY:OK] Clear to deploy')
+        : chalk.red('[ASSAY:BLOCK] Below threshold — review issues first')}`)
       console.log(chalk.dim('─'.repeat(40)))
 
       if (result.issues.length === 0) {
@@ -84,7 +84,7 @@ export const auditCommand = new Command('audit')
 
     } catch (err) {
       spinner.stop()
-      console.error(chalk.red('Sentinel encountered an error:'), err)
+      console.error(chalk.red('Assay encountered an error:'), err)
       process.exit(1)
     }
   })
