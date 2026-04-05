@@ -2,6 +2,7 @@ import { Command } from 'commander'
 import chalk from 'chalk'
 import ora from 'ora'
 import { runAudit } from '@assay-dev/core'
+import { detectProjectLanguages } from '@assay-dev/core'
 import { readProjectFiles, readGitignore, readPackageJson } from '../utils/fs.js'
 
 export const auditCommand = new Command('audit')
@@ -19,32 +20,37 @@ export const auditCommand = new Command('audit')
         readPackageJson(targetPath),
       ])
 
+      const ctx = { files, env: {}, gitignore, packageJson }
+      const languages = detectProjectLanguages(ctx)
       const fileCount = Object.keys(files).length
-      spinner.text = `Scanning ${fileCount} files...`
 
-      const result = await runAudit({ files, env: {}, gitignore, packageJson })
+      spinner.text = `Scanning ${fileCount} files across ${languages.join(', ') || 'unknown'} project...`
+
+      const result = await runAudit(ctx)
 
       spinner.stop()
 
       // header
       console.log('\n' + chalk.bold('ASSAY AUDIT REPORT'))
-      console.log(chalk.dim('─'.repeat(40)))
+      console.log(chalk.dim('─'.repeat(44)))
 
       // score
       const scoreColor =
         result.score >= threshold ? chalk.green :
         result.score >= 50       ? chalk.yellow :
                                    chalk.red
-      console.log(`Score:    ${scoreColor.bold(result.score + ' / 100')}`)
-      console.log(`Files:    ${fileCount}`)
-      console.log(`Issues:   ${result.issues.length}`)
-      console.log(`Status:   ${result.score >= threshold
+
+      console.log(`Score:      ${scoreColor.bold(result.score + ' / 100')}`)
+      console.log(`Files:      ${fileCount}`)
+      console.log(`Languages:  ${languages.length > 0 ? languages.join(', ') : 'detected automatically'}`)
+      console.log(`Issues:     ${result.issues.length}`)
+      console.log(`Status:     ${result.score >= threshold
         ? chalk.green('[ASSAY:OK] Clear to deploy')
         : chalk.red('[ASSAY:BLOCK] Below threshold — review issues first')}`)
-      console.log(chalk.dim('─'.repeat(40)))
+      console.log(chalk.dim('─'.repeat(44)))
 
       if (result.issues.length === 0) {
-        console.log(chalk.green('\n✓ No issues found. Suit is clean.\n'))
+        console.log(chalk.green('\n✓ No issues found. Clean to ship.\n'))
         return
       }
 
@@ -58,7 +64,7 @@ export const auditCommand = new Command('audit')
         for (const issue of tier3) {
           console.log(chalk.red(`  ✕ ${issue.title}`))
           console.log(chalk.dim(`    ${issue.detail}`))
-          if (issue.fix) console.log(chalk.dim(`    Fix: ${issue.fix}`))
+          if (issue.fix) console.log(chalk.green(`    Fix: ${issue.fix}`))
         }
       }
 
@@ -67,7 +73,7 @@ export const auditCommand = new Command('audit')
         for (const issue of tier2) {
           console.log(chalk.yellow(`  ⚠ ${issue.title}`))
           console.log(chalk.dim(`    ${issue.detail}`))
-          if (issue.fix) console.log(chalk.dim(`    Fix: ${issue.fix}`))
+          if (issue.fix) console.log(chalk.green(`    Fix: ${issue.fix}`))
         }
       }
 
